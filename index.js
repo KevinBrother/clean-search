@@ -1,4 +1,3 @@
-// TODO logo
 const searchList = [
   {
     name: 'google',
@@ -11,7 +10,7 @@ const searchList = [
     icon: 'https://www.baidu.com/favicon.ico'
   },
   {
-    name: 'baidu',
+    name: 'zhihu',
     url: 'https://www.zhihu.com/search?q={query}',
     icon: 'https://www.zhihu.com/favicon.ico'
   },
