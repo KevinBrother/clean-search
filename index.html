@@ -24,6 +24,7 @@
           class="button is-info is-light"
           v-for="item in searchList"
           :key="item.key"
+          @click="search(item.url)"
         >
           <img
             :src="item.icon"
@@ -61,16 +62,17 @@
             ></button>
           </header>
           <section class="modal-card-body">
-            <input type="text" class="input is-info" />
+            <input type="text" class="input is-info"/>
           </section>
           <footer class="modal-card-foot">
             <button
               class="button is-info is-light is-outlined"
-              data-command="save"
+              data-command="hide"
+              
             >
               Save changes
             </button>
-            <button class="button" data-command="cancel">Cancel</button>
+            <!-- <button class="button" data-command="cancel">Cancel</button> -->
           </footer>
         </div>
       </div>
@@ -88,7 +90,16 @@
       },
       methods: {
         handleModal() {
-          const el = event.target;
+          const {command} = event.target.dataset;
+          if(command === 'hide') this.showModal = false;
+        },
+        search(url){
+          const kw = this.keyWords.trim();
+          if(!kw) alert('输入框不能为空!')
+          else {
+            url = url.replace('{query}',kw);
+            window.open(url)
+          }
         }
       }
     });
