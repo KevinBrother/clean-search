@@ -1,0 +1,34 @@
+nav{
+    padding: 10px 20px;
+}
+
+.tools {
+    padding-top: 155px;
+    display: flex;
+    justify-content: center;
+}
+
+.tools > .is-info {
+    margin-right: 20px;
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+.tools > .add {
+    border-radius: 50%;
+}
+
+.tools .delete{
+    margin-left: 5px;
+    margin-bottom: 6.6px;
+}
+
+.ipt-wrapper {
+    text-align: center;
+    padding: 90px 0 ;
+}
+
+.ipt-wrapper > input {
+    width: 50%;
+}
+
