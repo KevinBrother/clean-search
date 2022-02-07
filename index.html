@@ -1,106 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Qurar</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
-    />
-    <link rel="stylesheet" href="./style.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    </style>
+    <link rel="stylesheet" href="./style.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-  </head>
-  <body>
+</head>
     <div id="app">
-      <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-          <li @click="showDelete = !showDelete"><a>Edit</a></li>
-        </ul>
-      </nav>
-      <div class="tools">
-        <div
-          class="button is-info is-light"
-          v-for="item in searchList"
-          :key="item.key"
-          @click="search(item.url)"
-        >
-          <img
-            :src="item.icon"
-            alt="item.name"
-            v-if="item.icon"
-            style="width: 20px; margin-right: 5px"
-          />
-          <span>{{item.name}}</span>
-          <button class="delete is-small" v-show="showDelete"></button>
+        <div class="tool-container">
+            <a class="btn-floating btn waves-effect waves-light blue lighten-3 modal-trigger" href="#tableEditor"><i class="material-icons">edit</i></a>
+            <a class="btn-floating btn waves-effect waves-light blue lighten-3 modal-trigger" href="#modal1"><i class="material-icons">add</i></a>
+            <a class="btn-floating btn waves-effect waves-light blue lighten-3 modal-trigger" href="#modal2"><i class="material-icons">undo</i></a>
         </div>
-        <div class="button is-light add" @click="showModal = true">+</div>
-      </div>
-      <div class="ipt-wrapper">
-        <input
-          type="text"
-          class="input is-info"
-          v-model="keyWords"
-          placeholder="searching..."
-        />
-      </div>
+       
+        <div class="input-container">
+            <div class="input-field">
+                <input type="text" id="autocomplete-input" class="autocomplete" v-model="keyWords">
+                <label for="autocomplete-input">Searching...</label>
+            </div>
+        </div>
+        
+        <div class="row item-container">
+            <div class="col s12 m6 l2"  v-for="item in searchList">
+                <div class="waves-effect waves-light item" @click="search(item.url)" draggable="true">
+                    <img :src="item.icon" style="width: 20px;" onerror="this.src='https://www.google.com/favicon.ico'">
+                    <span>{{item.name}}</span>
+                </div> 
+            </div>
+        </div>
 
-      <div
-        class="modal"
-        :class="showModal ? 'is-active': '' "
-        @click="handleModal"
-      >
-        <div class="modal-background" data-command="hide"></div>
-        <div class="modal-card">
-          <header class="modal-card-head">
-            <p class="modal-card-title">Enter the website address</p>
-            <button
-              class="delete"
-              aria-label="close"
-              data-command="hide"
-            ></button>
-          </header>
-          <section class="modal-card-body">
-            <input type="text" class="input is-info" />
-          </section>
-          <footer class="modal-card-foot">
-            <button
-              class="button is-info is-light is-outlined"
-              data-command="hide"
-            >
-              Save changes
-            </button>
-            <!-- <button class="button" data-command="cancel">Cancel</button> -->
-          </footer>
+        <!-- Modal Structure -->
+        <div id="modal1" class="modal">
+            <div class="modal-content">
+            <h5>Enter website info</h5>
+
+            <div class="modal-input-field">
+                <div class="input-field">
+                <input type="text" id="autocomplete-input" class="autocomplete" v-model="name">
+                <label for="autocomplete-input">name</label>
+            </div>
+            <div class="modal-input-field">
+                <div class="input-field">
+                <input type="text" id="autocomplete-input" class="autocomplete" v-model="url">
+                <label for="autocomplete-input">url</label>
+            </div>
+            </div>
+            
+            </div>
+            <div class="modal-footer">
+            <a href="#!" class="waves-effect waves-green btn-flat" @click="save">save</a>
+            </div>
         </div>
-      </div>
+        </div>
+
+        <div id="modal2" class="modal">
+            <div class="modal-content">
+                <h6>Sure to reset?</h6>
+            </div>
+            <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat" @click="reset()">Agree</a>
+            </div>
+        </div>
+
+        <div id="tableEditor" class="modal">
+            <div class="modal-content">
+                <table>
+        <thead>
+          <tr>
+              <th>Name</th>
+              <th>URL</th>
+          </tr>
+        </thead>
+
+        <tbody>
+            <tr v-for="item in searchList">
+                <td>
+                    <label>
+                        <input type="checkbox" />
+                        <span>{{item.name}}</span>
+                    </label>
+                </td>
+                <td>{{item.url}}</td>
+            </tr>
+        </tbody>
+      </table>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">Delete</a>
+            </div>
+        </div>
     </div>
-  </body>
-  <script src="./index.js"></script>
-  <script>
-    new Vue({
+</body>
+<script src="./index.js"></script>
+<script>
+new Vue({
       el: '#app',
       data: {
         searchList,
+        M,
         keyWords: '',
-        showDelete: false,
-        showModal: false
+        instance: null,
+        name: '',
+        url: '',
+        instance: null,
+        tableEditorInstance: null,
+        urlReg: /^((https|http|ftp|rtsp|mms):\/\/)(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?(([0-9]{1,3}.){3}[0-9]{1,3}|([0-9a-z_!~*'()-]+.)*([0-9a-z][0-9a-z-]{0,61})?[0-9a-z].[a-z]{2,6})(:[0-9]{1,4})?((\/?)|(\/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+\/?)$/,
+      },
+      mounted(){
+          this.initMaterial();
       },
       methods: {
-        handleModal() {
-          const { command } = event.target.dataset;
-          if (command === 'hide') this.showModal = false;
-        },
-        search(url) {
-          const kw = this.keyWords.trim();
-          if (!kw) alert('输入框不能为空!');
-          else {
-            url = url.replace('{query}', kw);
-            window.open(url);
+    initMaterial(){
+        this.M.AutoInit();
+        const elems = document.querySelector('#modal1');
+        const tableEiditor = document.querySelector('#tableEditor');
+        this.instance = this.M.Modal.init(elems);
+        this.tableEditorInstance = this.M.Modal.init(tableEiditor);
+      },
+       save() {
+           let name = this.name.trim();
+           let url = this.url.trim();
+           if(!name) {
+               this.M.toast({html: 'name is required!'})
+           }else if(!url) {
+               this.M.toast({html: 'url is required!'})
+           }else if (name.length > 20){
+               this.M.toast({html: 'max name length is exceed!'})
+           }else if (!this.urlReg.test(url)){
+               this.M.toast({html: 'url is not valid!'})
+           }else if (this.searchList.filter(v=>v.url === url).length){
+                this.M.toast({html: 'url is already exist!'})
+           }else{
+                let arr1 = url.split('//');
+                let arr2 = url.split('//')[1].split('/');
+                let icon = arr1[0] + '//' + arr2[0] + '/favicon.ico';
+                let urlObj = {
+                    name,
+                    url,
+                    icon
+                }
+                this.searchList.push(urlObj);
+                this.instance.close();
+                this.url = '';
+                this.name = '';
+           }
+       },
+      reset() {
+        this.searchList = searchList;
+      },
+      search(url) {
+          let kw = this.keyWords.trim();
+          if(!kw){
+              this.M.toast({html: 'keywords can\'t be empty!'})
+              return;
           }
-        }
+            url = url.replace('{query}', this.keyWords);
+            window.open(url);
+            this.keyWords = '';
       }
+    },
+      
     });
-  </script>
+</script>
 </html>
