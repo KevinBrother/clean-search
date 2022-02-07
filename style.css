@@ -1,34 +1,33 @@
-nav{
-    padding: 10px 20px;
+.tool-container {
+    padding-left: 10px;
+    padding-top: 10px;
 }
 
-.tools {
-    padding-top: 155px;
+.input-container {
+    padding: 10% 12% 5% 12%;
+}
+
+.item-container {
+    padding: 0 10%;
+}
+
+.item {
+    width: 100%;
+    padding: 10px 0;
     display: flex;
+    align-items: center;
     justify-content: center;
+    background-color: #eff5fb;
+    color: #296fa8;
+    margin-bottom: 10px;
 }
 
-.tools > .is-info {
-    margin-right: 20px;
-    padding: 6px 10px;
-    border-radius: 8px;
+.item>img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
 }
 
-.tools > .add {
-    border-radius: 50%;
+.modal-input-field {
+    padding-top: 10px;
 }
-
-.tools .delete{
-    margin-left: 5px;
-    margin-bottom: 6.6px;
-}
-
-.ipt-wrapper {
-    text-align: center;
-    padding: 90px 0 ;
-}
-
-.ipt-wrapper > input {
-    width: 50%;
-}
-
