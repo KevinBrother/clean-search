@@ -135,6 +135,7 @@
                 this.M.AutoInit();
                 const elem = document.querySelector('#modal1');
                 const tableEditor = document.querySelector('#tableEditor');
+                document.getElementById("autocomplete-input").focus();
                 this.instance = this.M.Modal.init(elem);
                 this.tableEditorInstance = this.M.Modal.init(tableEditor);
             },
