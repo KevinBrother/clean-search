@@ -52,7 +52,7 @@
                 <div class="modal-input-field">
                     <div class="input-field">
                         <input type="text" id="autocomplete-input" class="autocomplete" v-model="url">
-                        <label for="autocomplete-input">url(eg: https://www.google.com/search?q={query})</label>
+                        <label for="autocomplete-input">url</label>
                     </div>
                 </div>
 
@@ -75,7 +75,7 @@
 
     <div id="tableEditor" class="modal">
         <div class="modal-content">
-            <table>
+            <table v-if="searchList.length">
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -84,10 +84,10 @@
                 </thead>
 
                 <tbody>
-                    <tr v-for="item in searchList">
+                    <tr v-for="item in searchList" :key="item.url">
                         <td>
                             <label>
-                                <input type="checkbox" />
+                                <input type="checkbox" v-model="item.checked"/>
                                 <span>{{item.name}}</span>
                             </label>
                         </td>
@@ -95,16 +95,18 @@
                     </tr>
                 </tbody>
             </table>
+            <p v-else>SearchList is empty...</p>
         </div>
         <div class="modal-footer">
             <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancel</a>
-            <a href="#!" class="modal-close waves-effect waves-green btn-flat" @click="remove()">Delete</a>
+            <a href="#!" class="waves-effect waves-green btn-flat" @click="remove()">Delete</a>
         </div>
     </div>
 </div>
 </body>
 <script src="./index.js"></script>
 <script>
+    const searchListCopy = JSON.parse(JSON.stringify(searchList));
     new Vue({
         el: '#app',
         data: {
@@ -148,11 +150,13 @@
             },
 
             reset() {
-                this.searchList = searchList;
+                this.searchList = searchListCopy;
             },
 
             remove() {
-                // 根据id调用 removeSearch
+                this.searchList = this.searchList.filter(v=>!v.checked);
+                this.tableEditorInstance.close();
+                this.setStoreSearchList(this.searchList);
             },
 
             search(url = this.searchList[0].url) {
@@ -272,5 +276,4 @@
     });
 
 </script>
-
 </html>
