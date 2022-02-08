@@ -25,7 +25,7 @@
 
     <div class="input-container">
         <div class="input-field">
-            <input type="text" id="autocomplete-input" class="autocomplete" v-model="keyWords" @keyup.enter="search()">
+            <input type="text" id="autocomplete-input" class="autocomplete" v-model="keyWords" @keydown.13="search()" >
             <label for="autocomplete-input">Searching...</label>
         </div>
     </div>
@@ -272,6 +272,9 @@
                     return false;
                 }
                 return true;
+            },
+            search229() {
+                console.log(1111);
             }
         },
     });
